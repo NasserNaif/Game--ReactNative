@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 100,
     marginHorizontal: 20,
-    padding: 20,
+    padding: 40,
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
