@@ -1,9 +1,30 @@
-import { StyleSheet, Text, View, TextInput, StatusBar } from "react-native";
-import React from "react";
+import { StyleSheet, View, TextInput, Alert } from "react-native";
+import React, { useState } from "react";
 import PrimaryBTN from "../components/PrimaryBTN";
 import SecondaryBTN from "../components/SecondaryBTN";
 
-export default function StartGamePage() {
+export default function StartGamePage({ onConfirmValue }) {
+  const [inputValue, setInputValue] = useState("");
+
+  const inputHandler = (inputText) => {
+    setInputValue(inputText);
+  };
+
+  const confirmFun = () => {
+    const choseNumber = parseInt(inputValue);
+    if (isNaN(choseNumber) || choseNumber <= 0 || choseNumber > 99) {
+      Alert.alert("Input Error", "You should input a number between 1 to 99", [
+        { text: "Okay", style: "cancel", onPress: resetFun },
+      ]);
+      return;
+    }
+
+    onConfirmValue(choseNumber);
+  };
+
+  const resetFun = () => {
+    setInputValue("");
+  };
   return (
     <View style={styles.container}>
       <TextInput
@@ -11,10 +32,12 @@ export default function StartGamePage() {
         style={styles.inputStyle}
         placeholder="Input"
         maxLength={2}
+        value={inputValue}
+        onChangeText={inputHandler}
       />
       <View style={styles.buttonContainer}>
-        <PrimaryBTN>Primary</PrimaryBTN>
-        <SecondaryBTN>Secondary</SecondaryBTN>
+        <PrimaryBTN onPress={() => confirmFun()}>Confirm</PrimaryBTN>
+        <SecondaryBTN onPress={() => resetFun()}>Reset</SecondaryBTN>
       </View>
     </View>
   );

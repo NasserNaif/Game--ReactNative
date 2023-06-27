@@ -1,13 +1,15 @@
 import { Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
+import Colors from "../util/Colors";
 
-const SecondaryBTN = ({ children }) => {
+const SecondaryBTN = ({ children, onPress }) => {
   return (
     <Pressable
       android_ripple={{ color: "#ced4da" }}
       style={({ pressed }) =>
         pressed ? [styles.BTN, styles.pressed] : styles.BTN
       }
+      onPress={onPress}
     >
       <Text style={styles.text}>{children}</Text>
     </Pressable>
@@ -20,9 +22,9 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: Colors.secondaryWhite,
     justifyContent: "center",
-    borderColor: "#00a6fb",
+    borderColor: Colors.primaryBlue,
     borderWidth: 1,
     elevation: 5,
     shadowColor: "black",
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
   text: {
-    color: "#00a6fb",
+    color: Colors.primaryBlue,
     fontSize: 18,
     fontWeight: "bold",
   },
