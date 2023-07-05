@@ -1,7 +1,6 @@
 import { StyleSheet, View, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
 import PrimaryBTN from "../components/PrimaryBTN";
-import SecondaryBTN from "../components/SecondaryBTN";
 
 export default function StartGamePage({ onConfirmValue }) {
   const [inputValue, setInputValue] = useState("");
@@ -37,7 +36,9 @@ export default function StartGamePage({ onConfirmValue }) {
       />
       <View style={styles.buttonContainer}>
         <PrimaryBTN onPress={() => confirmFun()}>Confirm</PrimaryBTN>
-        <SecondaryBTN onPress={() => resetFun()}>Reset</SecondaryBTN>
+        <PrimaryBTN styleBTN="secondary" onPress={() => resetFun()}>
+          Reset
+        </PrimaryBTN>
       </View>
     </View>
   );
