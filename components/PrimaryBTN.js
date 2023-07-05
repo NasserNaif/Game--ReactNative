@@ -5,7 +5,7 @@ import Colors from "../util/Colors";
 const PrimaryBTN = ({ children, onPress, styleBTN }) => {
   const styles = StyleSheet.create({
     primaryBTN: {
-      width: 100,
+      width: "50%",
       height: 50,
       backgroundColor: Colors.primaryBlue,
       borderRadius: 10,
@@ -18,7 +18,7 @@ const PrimaryBTN = ({ children, onPress, styleBTN }) => {
       shadowRadius: 6,
     },
     secondaryBTN: {
-      width: 100,
+      width: "50%",
       height: 50,
       borderRadius: 10,
       alignItems: "center",

@@ -3,7 +3,6 @@ import StartGamePage from "./Pages/StartGamePage";
 import { LinearGradient } from "expo-linear-gradient";
 import GamePage from "./Pages/GamePage";
 import { useState } from "react";
-import Colors from "./util/Colors";
 
 export default function App() {
   const [pickedNumber, setPickedNumber] = useState();
@@ -12,16 +11,14 @@ export default function App() {
     setPickedNumber(value);
   }
 
+  console.log(pickedNumber);
   let screen = <StartGamePage onConfirmValue={confirmedNumber} />;
 
   if (pickedNumber) {
-    screen = <GamePage />;
+    screen = <GamePage userValue={pickedNumber} />;
   }
   return (
-    <LinearGradient
-      colors={[Colors.primaryBlue, "#fff2"]}
-      style={styles.container}
-    >
+    <LinearGradient colors={["#58A4B0", "#2B303A"]} style={styles.container}>
       <ImageBackground
         source={require("./assets/background.png")}
         resizeMode="cover"
