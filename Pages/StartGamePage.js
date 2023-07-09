@@ -1,6 +1,16 @@
-import { StyleSheet, View, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Alert,
+  SafeAreaView,
+  Text,
+} from "react-native";
 import React, { useState } from "react";
 import PrimaryBTN from "../components/PrimaryBTN";
+import Title from "../components/Title";
+import Colors from "../util/Colors";
+import Card from "../components/Card";
 
 export default function StartGamePage({ onConfirmValue }) {
   const [inputValue, setInputValue] = useState("");
@@ -25,37 +35,41 @@ export default function StartGamePage({ onConfirmValue }) {
     setInputValue("");
   };
   return (
-    <View style={styles.container}>
-      <TextInput
-        inputMode="numeric"
-        style={styles.inputStyle}
-        placeholder="Input"
-        maxLength={2}
-        value={inputValue}
-        onChangeText={inputHandler}
-      />
-      <View style={styles.buttonContainer}>
-        <PrimaryBTN onPress={() => confirmFun()}>Confirm</PrimaryBTN>
-        <PrimaryBTN styleBTN="secondary" onPress={() => resetFun()}>
-          Reset
-        </PrimaryBTN>
-      </View>
-    </View>
+    <SafeAreaView style={styles.rootContainer}>
+      <Title>Guess my number </Title>
+      <Card>
+        <Text style={styles.textStyle}>Enter number </Text>
+        <TextInput
+          inputMode="numeric"
+          keyboardType="number-pad"
+          style={styles.inputStyle}
+          placeholder="* *"
+          maxLength={2}
+          value={inputValue}
+          onChangeText={inputHandler}
+        />
+        <View style={styles.buttonContainer}>
+          <PrimaryBTN onPress={() => confirmFun()}>Confirm</PrimaryBTN>
+          <PrimaryBTN styleBTN="secondary" onPress={() => resetFun()}>
+            Reset
+          </PrimaryBTN>
+        </View>
+      </Card>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 100,
-    marginHorizontal: 20,
-    padding: 40,
-    backgroundColor: "white",
+  rootContainer: {
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 15,
-    elevation: 6,
+    paddingHorizontal: 15,
   },
 
+  textStyle: {
+    color: Colors.textColor,
+    fontSize: 25,
+  },
   buttonContainer: {
     flexDirection: "row",
     marginTop: 20,
@@ -63,12 +77,13 @@ const styles = StyleSheet.create({
   },
 
   inputStyle: {
-    width: "66%",
+    width: 100,
     height: 40,
-    backgroundColor: "white",
+    backgroundColor: Colors.secondaryWhite,
     borderRadius: 7,
     textAlign: "center",
     fontSize: 30,
+    color: Colors.textColor,
     borderBottomWidth: 1,
     borderBottomColor: "#00a6fb",
     elevation: 6,

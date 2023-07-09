@@ -1,9 +1,10 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 import GameContainer from "../components/GameContainer";
 import PrimaryBTN from "../components/PrimaryBTN";
 import Colors from "../util/Colors";
+import Card from "../components/Card";
 
 function generateRandomNumber(min, max, exclude) {
   const rnNum = Math.floor(Math.random() * (max - min)) + min;
@@ -17,14 +18,16 @@ function generateRandomNumber(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GamePage = ({ userValue }) => {
+const GamePage = ({ userValue, onGameOver }) => {
   console.log("userValue is " + userValue);
-  const initialValue = generateRandomNumber(
-    minBoundary,
-    maxBoundary,
-    userValue
-  );
+  const initialValue = generateRandomNumber(1, 100, userValue);
   const [currentGuessValue, setCurrentGuessValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (currentGuessValue == userValue) {
+      onGameOver();
+    }
+  }, [currentGuessValue, userValue, onGameOver]);
 
   function nextGuessHandler(direction) {
     // direction => Higher or Lower than userValue
@@ -57,15 +60,17 @@ const GamePage = ({ userValue }) => {
       <Title>Guess chanses</Title>
       <GameContainer>{currentGuessValue}</GameContainer>
       <View style={styles.container}>
-        <Text style={styles.text}>Higher or Lower !</Text>
-        <View style={styles.BTNcontainer}>
-          <PrimaryBTN onPress={nextGuessHandler.bind(this, "Lower")}>
-            -
-          </PrimaryBTN>
-          <PrimaryBTN onPress={nextGuessHandler.bind(this, "Higher")}>
-            +
-          </PrimaryBTN>
-        </View>
+        <Card>
+          <Text style={styles.text}>Higher or Lower !</Text>
+          <View style={styles.BTNcontainer}>
+            <PrimaryBTN onPress={nextGuessHandler.bind(this, "Lower")}>
+              -
+            </PrimaryBTN>
+            <PrimaryBTN onPress={nextGuessHandler.bind(this, "Higher")}>
+              +
+            </PrimaryBTN>
+          </View>
+        </Card>
       </View>
     </View>
   );
@@ -94,6 +99,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     fontWeight: "bold",
-    color: Colors.secondaryWhite,
+    color: Colors.textColor,
   },
 });
