@@ -36,7 +36,7 @@ const PrimaryBTN = ({ children, onPress, styleBTN }) => {
       color:
         styleBTN != "secondary" ? Colors.secondaryWhite : Colors.primaryBlue,
       fontSize: 18,
-      fontWeight: "bold",
+      fontFamily: "open-sans-bold",
     },
 
     pressed: {

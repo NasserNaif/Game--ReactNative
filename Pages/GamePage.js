@@ -5,6 +5,7 @@ import GameContainer from "../components/GameContainer";
 import PrimaryBTN from "../components/PrimaryBTN";
 import Colors from "../util/Colors";
 import Card from "../components/Card";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 function generateRandomNumber(min, max, exclude) {
   const rnNum = Math.floor(Math.random() * (max - min)) + min;
@@ -22,12 +23,18 @@ const GamePage = ({ userValue, onGameOver }) => {
   console.log("userValue is " + userValue);
   const initialValue = generateRandomNumber(1, 100, userValue);
   const [currentGuessValue, setCurrentGuessValue] = useState(initialValue);
+  const [roundCount, setRoundCount] = useState(0);
 
   useEffect(() => {
     if (currentGuessValue == userValue) {
-      onGameOver();
+      onGameOver(roundCount);
     }
   }, [currentGuessValue, userValue, onGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
 
   function nextGuessHandler(direction) {
     // direction => Higher or Lower than userValue
@@ -53,6 +60,7 @@ const GamePage = ({ userValue, onGameOver }) => {
       currentGuessValue
     );
 
+    setRoundCount((prev) => prev + 1);
     setCurrentGuessValue(newRandomNumber);
   }
   return (
@@ -61,13 +69,13 @@ const GamePage = ({ userValue, onGameOver }) => {
       <GameContainer>{currentGuessValue}</GameContainer>
       <View style={styles.container}>
         <Card>
-          <Text style={styles.text}>Higher or Lower !</Text>
+          <Text style={styles.text}>Lower or Higher !</Text>
           <View style={styles.BTNcontainer}>
             <PrimaryBTN onPress={nextGuessHandler.bind(this, "Lower")}>
-              -
+              <FontAwesome5 name="angle-double-down" size={24} color="white" />
             </PrimaryBTN>
             <PrimaryBTN onPress={nextGuessHandler.bind(this, "Higher")}>
-              +
+              <FontAwesome5 name="angle-double-up" size={24} color="white" />
             </PrimaryBTN>
           </View>
         </Card>
@@ -97,8 +105,8 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   text: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 27,
+    fontFamily: "open-sans-bold",
     color: Colors.textColor,
   },
 });

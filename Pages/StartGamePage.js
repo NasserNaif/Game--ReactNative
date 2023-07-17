@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: Colors.textColor,
     fontSize: 25,
+    fontFamily: "open-sans",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     width: 100,
     height: 40,
-    backgroundColor: Colors.secondaryWhite,
+    backgroundColor: "white",
     borderRadius: 7,
     textAlign: "center",
     fontSize: 30,
