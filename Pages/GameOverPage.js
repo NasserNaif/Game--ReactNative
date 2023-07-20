@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     color: Colors.secondaryWhite,
     textAlign: "center",
     marginVertical: 19,
+    borderRadius: 10,
   },
   highlightText: {
     color: Colors.primaryBlue,

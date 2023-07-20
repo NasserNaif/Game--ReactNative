@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 import GameContainer from "../components/GameContainer";
@@ -23,11 +23,11 @@ const GamePage = ({ userValue, onGameOver }) => {
   console.log("userValue is " + userValue);
   const initialValue = generateRandomNumber(1, 100, userValue);
   const [currentGuessValue, setCurrentGuessValue] = useState(initialValue);
-  const [roundCount, setRoundCount] = useState(0);
+  const [phoneGuess, setPhoneGuess] = useState([initialValue]);
 
   useEffect(() => {
     if (currentGuessValue == userValue) {
-      onGameOver(roundCount);
+      onGameOver(phoneGuess.length);
     }
   }, [currentGuessValue, userValue, onGameOver]);
 
@@ -60,8 +60,8 @@ const GamePage = ({ userValue, onGameOver }) => {
       currentGuessValue
     );
 
-    setRoundCount((prev) => prev + 1);
     setCurrentGuessValue(newRandomNumber);
+    setPhoneGuess((prev) => [newRandomNumber, ...prev]);
   }
   return (
     <View style={styles.screen}>
@@ -80,6 +80,22 @@ const GamePage = ({ userValue, onGameOver }) => {
           </View>
         </Card>
       </View>
+      <View style={styles.geussContainer}>
+        <Text style={[styles.geussText, { fontFamily: "open-sans-bold" }]}>
+          phone geuss
+        </Text>
+        <FlatList
+          data={phoneGuess}
+          keyExtractor={(item, index) => {
+            return index;
+          }}
+          renderItem={({ item }) => (
+            <Text key={item} style={styles.geussText}>
+              # <Text style={styles.highlightText}>{item}</Text>
+            </Text>
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -89,7 +105,7 @@ export default GamePage;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 24,
+    padding: 16,
   },
 
   container: {
@@ -108,5 +124,25 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontFamily: "open-sans-bold",
     color: Colors.textColor,
+  },
+  geussContainer: {
+    alignItems: "center",
+    flex: 1,
+  },
+  geussText: {
+    textAlign: "center",
+    fontFamily: "open-sans",
+    fontSize: 24,
+    color: Colors.textColor,
+    backgroundColor: Colors.secondaryWhite,
+    paddingHorizontal: 19,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  highlightText: {
+    fontSize: 30,
+    color: Colors.primaryBlue,
+    fontFamily: "open-sans-bold",
   },
 });
